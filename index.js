@@ -13,23 +13,21 @@ const db = mysql.createConnection({
   database: "system_db",
 });
 
-const repeatedQuestion = [
-  {
-    type: "list",
-    message: "What would you like to do?",
-    name: "continue",
-    choices: [
-      "Add Employee",
-      "Update Employee Role",
-      "View All Roles",
-      "Add Role",
-      "View All Departments",
-      "Add Department",
-      "View All Employees",
-      "Quit",
-    ],
-  },
-];
+const repeatedQuestion = {
+  type: "list",
+  message: "What would you like to do?",
+  name: "continue",
+  choices: [
+    "Add Employee",
+    "Update Employee Role",
+    "View All Roles",
+    "Add Role",
+    "View All Departments",
+    "Add Department",
+    "View All Employees",
+    "Quit",
+  ],
+};
 
 function decisionProcessing(response) {
   if (response.continue === "Add Employee") {
@@ -52,7 +50,7 @@ function decisionProcessing(response) {
 }
 
 function start() {
-  inquirer.prompt(repeatedQuestion).then((response) => {
+  inquirer.prompt([repeatedQuestion]).then((response) => {
     decisionProcessing(response);
   });
 }
@@ -100,6 +98,7 @@ function addEmployee() {
         name: "manager",
         choices: managersArr,
       },
+      repeatedQuestion,
     ])
     .then((response) => {
       let roleId;
@@ -117,12 +116,8 @@ function addEmployee() {
         roleId
       );
       emp.insertEmp();
-    })
-    // .then(
-    //   inquirer.prompt(repeatedQuestion).then((response) => {
-    //     decisionProcessing(response);
-    //   })
-    // );
+      decisionProcessing(response);
+    });
 }
 function updateEmployeeRole() {
   // TODO: write function
