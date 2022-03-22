@@ -1,16 +1,29 @@
 {
-  "name": "connectnode",
+  "name": "employee-management-system",
   "version": "1.0.0",
-  "description": "Node connection code",
+  "description": "",
   "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitchelwachtel/employee-management-system.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mitchelwachtel/employee-management-system/issues"
+  },
+  "homepage": "https://github.com/mitchelwachtel/employee-management-system#readme",
   "dependencies": {
     "console.table": "^0.10.0",
-    "inquirer": "^8.2.0",
-    "mysql2": "^2.2.5"
+    "inquirer": "^8.2.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
   }
 }
