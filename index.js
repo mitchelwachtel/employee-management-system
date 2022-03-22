@@ -133,14 +133,25 @@ function viewAllEmployees() {
       console.table(result);
     }
   });
+  inquirer.prompt([repeatedQuestion]).then((response) => {
+    decisionProcessing(response);
+  });
 }
 
 //
 // ROLE FUNCTIONS
 //
 function viewAllRoles() {
-  // TODO: write function
-  console.log("hey!");
+    db.query("SELECT * FROM role", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.table(result);
+        }
+      });
+      inquirer.prompt([repeatedQuestion]).then((response) => {
+        decisionProcessing(response);
+      });
 }
 function addRole() {
   // TODO: write function
@@ -151,8 +162,16 @@ function addRole() {
 // DEPARTMENT FUNCTIONS
 //
 function viewAllDepartments() {
-  // TODO: write function
-  console.log("hey!");
+    db.query("SELECT * FROM department", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.table(result);
+        }
+      });
+      inquirer.prompt([repeatedQuestion]).then((response) => {
+        decisionProcessing(response);
+      });
 }
 function addDepartment() {
   // TODO: write function
