@@ -116,13 +116,13 @@ function addEmployee() {
         response.manager,
         roleId
       );
-      console.log(emp);
-    });
-  // .then(
-  //   inquirer.prompt(repeatedQuestion).then((response) => {
-  //     decisionProcessing(response);
-  //   })
-  // );
+      emp.insertEmp();
+    })
+    // .then(
+    //   inquirer.prompt(repeatedQuestion).then((response) => {
+    //     decisionProcessing(response);
+    //   })
+    // );
 }
 function updateEmployeeRole() {
   // TODO: write function
