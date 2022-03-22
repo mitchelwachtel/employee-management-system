@@ -61,7 +61,8 @@ function start() {
 function addEmployee() {
   const rolesArr = [];
   const rolesIdArr = [];
-  const managersArr = ["Greg", "Amanda", "Jennifer"];
+  const managersArr = ['No Manager']
+  const managersIdArr = [['No Manager', null]];
 
   db.query("SELECT id, title FROM role", (err, result) => {
     if (err) {
@@ -72,6 +73,19 @@ function addEmployee() {
       var row = result[key];
       rolesArr.push(row.title);
       rolesIdArr.push([row.title, row.id]);
+    });
+  });
+
+//   A very similar thing as with role, but with manager
+  db.query("SELECT id, first_name, last_name FROM employee", (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    Object.keys(result).forEach(function (key) {
+      let row = result[key];
+      let name = `${row.first_name} ${row.last_name}`;
+      managersArr.push(name);
+      managersIdArr.push([name, row.id]);
     });
   });
 
@@ -103,11 +117,15 @@ function addEmployee() {
     ])
     .then((response) => {
       let roleId;
+      let managerId;
       //   Here is my "genius" way of getting the role_id from that single query above. As it iterates through the rolesId array, we are waiting until the selected title is matched and then it's id is grabbed to be sent to make an object!
       for (let i = 0; i < rolesIdArr.length; i++) {
         if (rolesIdArr[i][0] === response.role) {
           roleId = rolesIdArr[i][1];
         }
+        if (managersIdArr[i][0] === response.manager) {
+            roleId = rolesIdArr[i][1];
+          }
       }
 
       const emp = new Employee(
@@ -115,18 +133,33 @@ function addEmployee() {
         response.last_name,
         response.role,
         response.manager,
-        roleId
+        roleId,
+        managerId
       );
       emp.insertEmp();
       decisionProcessing(response);
     });
 }
 function updateEmployeeRole() {
-  // TODO: write function
+  // TODO: Fix so that table is not overridden by prompt
   console.log("hey!");
 }
-function viewAllEmployees() {
-  db.query("SELECT * FROM employee", (err, result) => {
+async function viewAllEmployees() {
+  db.promise()
+    .query("SELECT * FROM employee")
+    .then(([rows, fields]) => console.table(rows))
+    .then(
+      inquirer.prompt([repeatedQuestion]).then((response) => {
+        decisionProcessing(response);
+      })
+    );
+}
+
+//
+// ROLE FUNCTIONS
+//
+function viewAllRoles() {
+  db.query("SELECT * FROM role", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -137,22 +170,6 @@ function viewAllEmployees() {
     decisionProcessing(response);
   });
 }
-
-//
-// ROLE FUNCTIONS
-//
-function viewAllRoles() {
-    db.query("SELECT * FROM role", (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.table(result);
-        }
-      });
-      inquirer.prompt([repeatedQuestion]).then((response) => {
-        decisionProcessing(response);
-      });
-}
 function addRole() {
   // TODO: write function
   console.log("hey!");
@@ -162,16 +179,16 @@ function addRole() {
 // DEPARTMENT FUNCTIONS
 //
 function viewAllDepartments() {
-    db.query("SELECT * FROM department", (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.table(result);
-        }
-      });
-      inquirer.prompt([repeatedQuestion]).then((response) => {
-        decisionProcessing(response);
-      });
+  db.query("SELECT * FROM department", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.table(result);
+    }
+  });
+  inquirer.prompt([repeatedQuestion]).then((response) => {
+    decisionProcessing(response);
+  });
 }
 function addDepartment() {
   // TODO: write function

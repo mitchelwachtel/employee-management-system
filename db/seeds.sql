@@ -13,12 +13,12 @@ VALUES ("Cold Caller", 50000, 1),
     ("Lifter", 32000, 3),
     ("Executive", 90000, 4),
     ("Accountant", 65000, 5);
-INSERT INTO employee (first_name, last_name, role_id)
-VALUES ("Gerald", "Hayes", 1),
-    ("Susie", "Portman", 2),
-    ("Lars", "Metalfingers", 3),
-    ("Jerald", "Llamacomb", 4),
-    ("Lava", "Volcano", 5),
-    ("Mama", "Goldberg", 6),
-    ("Pierce", "Brosnan", 7),
-    ("Kate", "Spade", 8);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Gerald", "Hayes", 4, null),
+    ("Susie", "Portman", 2, null),
+    ("Lars", "Metalfingers", 3, null),
+    ("Jerald", "Llamacomb", 4, 1),
+    ("Lava", "Volcano", 5, 2),
+    ("Mama", "Goldberg", 6, 3),
+    ("Pierce", "Brosnan", 7, null),
+    ("Kate", "Spade", 8, 7);
