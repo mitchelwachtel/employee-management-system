@@ -67,6 +67,7 @@ function addEmployee() {
     if (err) {
       console.log(err);
     }
+    // iterating through the result by the keys. Placing the role titles in an array for the questioning. Placing the title and the pairing role_id in another array to be used in a few lines
     Object.keys(result).forEach(function (key) {
       var row = result[key];
       rolesArr.push(row.title);
@@ -102,6 +103,7 @@ function addEmployee() {
     ])
     .then((response) => {
       let roleId;
+      //   Here is my "genius" way of getting the role_id from that single query above. As it iterates through the rolesId array, we are waiting until the selected title is matched and then it's id is grabbed to be sent to make an object!
       for (let i = 0; i < rolesIdArr.length; i++) {
         if (rolesIdArr[i][0] === response.role) {
           roleId = rolesIdArr[i][1];
@@ -124,8 +126,13 @@ function updateEmployeeRole() {
   console.log("hey!");
 }
 function viewAllEmployees() {
-  // TODO: write function
-  console.log("hey!");
+  db.query("SELECT * FROM employee", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.table(result);
+    }
+  });
 }
 
 //
