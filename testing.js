@@ -1,5 +1,5 @@
 const cTable = require("console.table");
-const {empArr} = require("./helpers/empFuns");
+const {getEmpArr} = require("./helpers/empFuns");
 
 // const db = require("./config/connection");
 
@@ -26,4 +26,4 @@ async function main() {
   console.table(rows);
 }
 
-empArr();
+getEmpArr().then(result => result.forEach(row=> console.log(row)));

@@ -27,6 +27,8 @@ async function getEmpArr() {
     database: "system_db",
   });
 
+  
+
   const [empArr, fields] = await db.execute(
     "SELECT id, first_name, last_name FROM employee"
   );

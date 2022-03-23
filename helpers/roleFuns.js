@@ -21,7 +21,7 @@ async function selectRole() {
   console.log("\n\n\n\n\n\n\n");
 }
 
-async function rolesArr() {
+async function getRolesArr() {
   const mysql = require("mysql2/promise");
 
   const db = await mysql.createConnection({
@@ -60,4 +60,4 @@ async function rolesArr() {
 //     });
 
 
-module.exports = {selectRole, rolesArr};
+module.exports = {selectRole, getRolesArr};
