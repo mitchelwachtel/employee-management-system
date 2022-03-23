@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-const Department = require("../lib/Department");
 const db = require("../config/connection");
 
 async function selectDept() {
@@ -30,10 +29,26 @@ async function getDeptArr() {
   });
 
   const [deptArr, fields] = await db.execute(
-    "SELECT id, title FROM department"
+    "SELECT id, name FROM department"
   );
   return deptArr;
 }
+
+async function getDeptId(name) {
+    const mysql = require("mysql2/promise");
+  
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "rootroot",
+      database: "system_db",
+    });
+  
+    const [id, fields] = await db.execute(
+      `SELECT id FROM department WHERE name = '${name}'`
+    );
+    return id[0]["id"];
+  }
 
 async function insertDept(response) {
   const mysql = require("mysql2/promise");
@@ -52,4 +67,4 @@ async function insertDept(response) {
   return deptArr;
 }
 
-module.exports = {selectDept, getDeptArr, insertDept};
+module.exports = {selectDept, getDeptArr, insertDept, getDeptId};

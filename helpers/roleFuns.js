@@ -1,7 +1,8 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-const Role = require("../lib/Role");
+// const Role = require("../lib/Role");
 const db = require("../config/connection");
+const {getDeptId} = require("../helpers/deptFuns");
 
 async function selectRole() {
   const mysql = require("mysql2/promise");
@@ -49,6 +50,22 @@ async function getRoleId(role) {
   return id[0]["id"];
 }
 
+async function insertRole(response) {
+  const mysql = require("mysql2/promise");
 
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
 
-module.exports = {selectRole, getRolesArr, getRoleId};
+  getDeptId(response.dept).then((dId) => {
+    db.execute(
+      `INSERT INTO role(title, salary, department_id) VALUES('${response.name}', '${response.salary}', '${dId}')`
+    );
+  });
+  return;
+}
+
+module.exports = {selectRole, getRolesArr, getRoleId, insertRole};
