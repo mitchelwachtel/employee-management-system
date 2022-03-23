@@ -44,8 +44,9 @@ async function insertEmp(first_name, last_name, roleId, managerId) {
     database: "system_db",
   });
 
+  // SHOULD role_id and man_id be in '' or not??
   const [empArr, fields] = await db.execute(
-    `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES('${first_name}', '${last_name}', '${roleId}', ${managerId})`
+    `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES('${first_name}', '${last_name}', '${roleId}', '${managerId}')`
   );
   console.log(`${first_name} was added`);
   return empArr;
@@ -83,4 +84,35 @@ async function empQuery(response) {
   return response;
 }
 
-module.exports = {selectEmp, getEmpArr, insertEmp, getManagerId, empQuery};
+async function updateEmpRole(response) {
+  const mysql = require("mysql2/promise");
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
+
+  const firstName = response.emp.split(" ")[0];
+  const lastName = response.emp.split(" ")[0];
+
+  getRoleId(response.role).then((rId) => {
+    db.execute(
+      `UPDATE employee SET role_id = '${rId}' WHERE first_name = '${firstName}'`
+    );
+  });
+
+  console.log("\n");
+  console.log(`${firstName} was updated`);
+  return await getRoleId(response.role);
+}
+
+module.exports = {
+  selectEmp,
+  getEmpArr,
+  insertEmp,
+  getManagerId,
+  empQuery,
+  updateEmpRole,
+};

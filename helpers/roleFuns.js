@@ -49,4 +49,6 @@ async function getRoleId(role) {
   return id[0]["id"];
 }
 
+
+
 module.exports = {selectRole, getRolesArr, getRoleId};
