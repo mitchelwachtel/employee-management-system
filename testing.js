@@ -1,4 +1,6 @@
 const cTable = require("console.table");
+const {empArr} = require("./helpers/empFuns");
+
 // const db = require("./config/connection");
 
 // db.query(`SELECT id FROM employee WHERE first_name = 'Susie'`, function (err, result) {
@@ -24,4 +26,4 @@ async function main() {
   console.table(rows);
 }
 
-main();
+empArr();
