@@ -1,5 +1,6 @@
 const cTable = require("console.table");
-const {getEmpArr} = require("./helpers/empFuns");
+const {getManagerId} = require("./helpers/empFuns");
+const Employee = require("./lib/Employee");
 
 // const db = require("./config/connection");
 
@@ -19,11 +20,18 @@ async function main() {
     database: "system_db",
   });
 
-  const [rows, fields] = await db.execute(
-    "SELECT * FROM employee"
-  );
+  const [rows, fields] = await db.execute("SELECT * FROM employee");
 
   console.table(rows);
 }
 
-getEmpArr().then(result => result.forEach(row=> console.log(row)));
+// const test = new Employee("Mitch", "Wach", "Forklift Guy", "Lava Volcano");
+// test.empQuery();
+// const arr = [];
+
+// getManagerId("Lava", "Volcano").then((id) => {
+//   arr.push(id);
+// });
+// console.log(arr);
+
+

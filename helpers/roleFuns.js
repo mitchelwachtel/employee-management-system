@@ -13,10 +13,8 @@ async function selectRole() {
     database: "system_db",
   });
 
-  const [rows, fields] = await db.execute(
-    "SELECT * FROM role"
-  );
-  console.log("\n")
+  const [rows, fields] = await db.execute("SELECT * FROM role");
+  console.log("\n");
   console.table(rows);
   console.log("\n\n\n\n\n\n\n");
 }
@@ -31,33 +29,24 @@ async function getRolesArr() {
     database: "system_db",
   });
 
-  const [rolesArr, fields] = await db.execute(
-    "SELECT id, title FROM role"
-  );
+  const [rolesArr, fields] = await db.execute("SELECT id, title FROM role");
   return rolesArr;
 }
 
+async function getRoleId(role) {
+  const mysql = require("mysql2/promise");
 
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
 
+  const [id, fields] = await db.execute(
+    `SELECT id FROM role WHERE title = '${role}'`
+  );
+  return id[0]["id"];
+}
 
-
-
-// const rolesArr = [];
-//     const rolesIdArr = [];
-//     const managersArr = ["No Manager"];
-//     const managersIdArr = [["No Manager", null]];
-
-//     db.query("SELECT id, title FROM role", (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       }
-//       // iterating through the result by the keys. Placing the role titles in an array for the questioning. Placing the title and the pairing role_id in another array to be used in a few lines
-//       Object.keys(result).forEach(function (key) {
-//         var row = result[key];
-//         rolesArr.push(row.title);
-//         rolesIdArr.push([row.title, row.id]);
-//       });
-//     });
-
-
-module.exports = {selectRole, getRolesArr};
+module.exports = {selectRole, getRolesArr, getRoleId};

@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
+const {getRoleId} = require("./roleFuns");
 
 async function selectEmp() {
   const mysql = require("mysql2/promise");
@@ -27,45 +28,59 @@ async function getEmpArr() {
     database: "system_db",
   });
 
-  
-
   const [empArr, fields] = await db.execute(
     "SELECT id, first_name, last_name FROM employee"
   );
   return empArr;
 }
 
-// const rolesArr = [];
-//     const rolesIdArr = [];
-//     const managersArr = ["No Manager"];
-//     const managersIdArr = [["No Manager", null]];
+async function insertEmp(first_name, last_name, roleId, managerId) {
+  const mysql = require("mysql2/promise");
 
-//     db.query("SELECT id, title FROM role", (err, result) => {
-//       if (err) {
-//         console.log(err);
-//       }
-//       // iterating through the result by the keys. Placing the role titles in an array for the questioning. Placing the title and the pairing role_id in another array to be used in a few lines
-//       Object.keys(result).forEach(function (key) {
-//         var row = result[key];
-//         rolesArr.push(row.title);
-//         rolesIdArr.push([row.title, row.id]);
-//       });
-//     });
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
 
-//     //   A very similar thing as with role, but with manager
-//     db.query(
-//       "SELECT id, first_name, last_name FROM employee",
-//       (err, result) => {
-//         if (err) {
-//           console.log(err);
-//         }
-//         Object.keys(result).forEach(function (key) {
-//           let row = result[key];
-//           let name = `${row.first_name} ${row.last_name}`;
-//           managersArr.push(name);
-//           managersIdArr.push([name, row.id]);
-//         });
-//       }
-//     );
+  const [empArr, fields] = await db.execute(
+    `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES('${first_name}', '${last_name}', '${roleId}', ${managerId})`
+  );
+  console.log(`${first_name} was added`);
+  return empArr;
+}
 
-module.exports = {selectEmp, getEmpArr};
+async function getManagerId(first_name, last_name) {
+  const mysql = require("mysql2/promise");
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
+
+  const [id, fields] = await db.execute(
+    `SELECT id FROM employee WHERE first_name = '${first_name}'`
+  );
+  return id[0]["id"];
+}
+
+async function empQuery(response) {
+  getRoleId(response.role).then((rId) => {
+    if (response.manager.split(" ")[0] === "No") {
+      insertEmp(response.first_name, response.last_name, rId, null);
+    } else {
+      getManagerId(
+        response.manager.split(" ")[0],
+        response.manager.split(" ")[0]
+      ).then((mId) => {
+        insertEmp(response.first_name, response.last_name, rId, mId);
+      });
+    }
+  });
+  return response;
+}
+
+module.exports = {selectEmp, getEmpArr, insertEmp, getManagerId, empQuery};
