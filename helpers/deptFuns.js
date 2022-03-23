@@ -28,27 +28,25 @@ async function getDeptArr() {
     database: "system_db",
   });
 
-  const [deptArr, fields] = await db.execute(
-    "SELECT id, name FROM department"
-  );
+  const [deptArr, fields] = await db.execute("SELECT id, name FROM department");
   return deptArr;
 }
 
 async function getDeptId(name) {
-    const mysql = require("mysql2/promise");
-  
-    const db = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "rootroot",
-      database: "system_db",
-    });
-  
-    const [id, fields] = await db.execute(
-      `SELECT id FROM department WHERE name = '${name}'`
-    );
-    return id[0]["id"];
-  }
+  const mysql = require("mysql2/promise");
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
+
+  const [id, fields] = await db.execute(
+    `SELECT id FROM department WHERE name = '${name}'`
+  );
+  return id[0]["id"];
+}
 
 async function insertDept(response) {
   const mysql = require("mysql2/promise");
