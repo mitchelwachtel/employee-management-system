@@ -71,4 +71,20 @@ async function insertRole(response) {
   return response;
 }
 
-module.exports = {selectRole, getRolesArr, getRoleId, insertRole};
+async function deleteRole(response) {
+  const mysql = require("mysql2/promise");
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
+
+  getRoleId(response.role).then((rId) => {
+    db.execute(`DELETE FROM role WHERE id = '${rId}'`);
+  });
+  return;
+}
+
+module.exports = {selectRole, getRolesArr, getRoleId, insertRole, deleteRole};
