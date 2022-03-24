@@ -46,7 +46,7 @@ async function insertEmp(first_name, last_name, roleId, managerId) {
   });
 
   const [empArr, fields] = await db.execute(
-    `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES('${first_name}', '${last_name}', '${roleId}', '${managerId}')`
+    `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES('${first_name}', '${last_name}', '${roleId}', ${managerId})`
   );
 
   return empArr;
