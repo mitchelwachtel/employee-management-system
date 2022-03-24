@@ -68,4 +68,20 @@ async function insertDept(response) {
   return deptArr;
 }
 
-module.exports = {selectDept, getDeptArr, insertDept, getDeptId};
+async function deleteDept(response) {
+    const mysql = require("mysql2/promise");
+  
+    const db = await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "rootroot",
+      database: "system_db",
+    });
+  
+    getDeptId(response.dept).then((dId) => {
+      db.execute(`DELETE FROM department WHERE id = '${dId}'`);
+    });
+    return;
+  }
+
+module.exports = {selectDept, getDeptArr, insertDept, getDeptId, deleteDept};
