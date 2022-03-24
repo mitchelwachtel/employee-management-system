@@ -16,6 +16,7 @@ async function selectEmp() {
   console.log("\n");
   console.table(rows);
   console.log("\n\n\n\n\n\n\n");
+  // await db.end();
 }
 
 async function getEmpArr() {
@@ -111,6 +112,59 @@ async function updateEmpRole(response) {
   return await getRoleId(response.role);
 }
 
+async function updateEmpManager(response) {
+  const mysql = require("mysql2/promise");
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
+
+  const firstName = response.emp.split(" ")[0];
+  const lastName = response.emp.split(" ")[0];
+
+  const manFirstName = response.manager.split(" ")[0];
+  const manLastName = response.manager.split(" ")[0];
+
+  if (manFirstName === "No") {
+    db.execute(
+      `UPDATE employee SET manager_id = 'null' WHERE first_name = '${firstName}'`
+    );
+  } else {
+    getManagerId(manFirstName, manLastName).then((mId) => {
+      db.execute(
+        `UPDATE employee SET manager_id = '${mId}' WHERE first_name = '${firstName}'`
+      );
+    });
+  }
+
+  // console.log("\n");
+  // console.log(`${firstName} was updated`);
+  // console.log('\n');
+  return;
+}
+
+async function deleteEmp(response) {
+  const mysql = require("mysql2/promise");
+
+  const db = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "rootroot",
+    database: "system_db",
+  });
+
+  const firstName = response.emp.split(" ")[0];
+  const lastName = response.emp.split(" ")[0];
+
+  getManagerId(firstName, lastName).then((eId) => {
+    db.execute(`DELETE FROM employee WHERE id = '${eId}'`);
+  });
+  return;
+}
+
 module.exports = {
   selectEmp,
   getEmpArr,
@@ -118,4 +172,6 @@ module.exports = {
   getManagerId,
   empQuery,
   updateEmpRole,
+  updateEmpManager,
+  deleteEmp,
 };
