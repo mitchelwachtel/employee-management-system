@@ -35,7 +35,7 @@ Technologies used: mySQL, node.js, npm, dependencies: 'inquirer', 'cTable', 'mys
 ### Usage
 This terminal application will give you access to your database so you can manage your employees. You must install dependencies for application to be functional along with updating the sequel connection with your personal database information. To open the application and begin usage, type "node index" into the terminal.
 
-Watch *[this video](####)* to see the how using this app works.
+Watch *[this video](https://youtu.be/7vLTmNt3d5w)* to see the how using this app works.
 
 ![Navigation](./assets/images/navigation.png)
 
