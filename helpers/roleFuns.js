@@ -1,7 +1,6 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 
-const db = require("../config/connection");
 const {getDeptId} = require("../helpers/deptFuns");
 
 async function selectRole() {
@@ -65,9 +64,7 @@ async function insertRole(response) {
       `INSERT INTO role(title, salary, department_id) VALUES('${response.name}', '${response.salary}', '${dId}')`
     );
   });
-  // console.log('\n');
-  // console.log(`Role of ${response.name} was added`);
-  // console.log('\n');
+  
   return response;
 }
 

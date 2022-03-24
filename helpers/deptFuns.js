@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-const db = require("../config/connection");
+
 
 async function selectDept() {
   const mysql = require("mysql2/promise");
@@ -62,9 +62,6 @@ async function insertDept(response) {
     `INSERT INTO department(name) VALUES('${response.dept}')`
   );
 
-//   console.log('\n');
-//   console.log(`Department of ${response.dept} was added`);
-//   console.log('\n');
   return deptArr;
 }
 
