@@ -65,7 +65,10 @@ async function insertRole(response) {
       `INSERT INTO role(title, salary, department_id) VALUES('${response.name}', '${response.salary}', '${dId}')`
     );
   });
-  return;
+  // console.log('\n');
+  // console.log(`Role of ${response.name} was added`);
+  // console.log('\n');
+  return response;
 }
 
 module.exports = {selectRole, getRolesArr, getRoleId, insertRole};

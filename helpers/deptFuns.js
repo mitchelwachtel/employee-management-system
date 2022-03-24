@@ -61,7 +61,10 @@ async function insertDept(response) {
   const [deptArr, fields] = await db.execute(
     `INSERT INTO department(name) VALUES('${response.dept}')`
   );
-  console.log(`${response.dept} was added`);
+
+//   console.log('\n');
+//   console.log(`Department of ${response.dept} was added`);
+//   console.log('\n');
   return deptArr;
 }
 

@@ -48,7 +48,9 @@ async function insertEmp(first_name, last_name, roleId, managerId) {
   const [empArr, fields] = await db.execute(
     `INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES('${first_name}', '${last_name}', '${roleId}', '${managerId}')`
   );
-  console.log(`${first_name} was added`);
+  // console.log('\n');
+  // console.log(`${first_name} was added`);
+  // console.log('\n');
   return empArr;
 }
 
@@ -103,8 +105,9 @@ async function updateEmpRole(response) {
     );
   });
 
-  console.log("\n");
-  console.log(`${firstName} was updated`);
+  // console.log("\n");
+  // console.log(`${firstName} was updated`);
+  // console.log('\n');
   return await getRoleId(response.role);
 }
 
