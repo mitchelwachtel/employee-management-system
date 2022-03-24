@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 const {getRoleId} = require("./roleFuns");
+const Prompt = require("../lib/Prompt");
 
 async function selectEmp() {
   const mysql = require("mysql2/promise");
@@ -16,7 +17,6 @@ async function selectEmp() {
   console.log("\n");
   console.table(rows);
   console.log("\n\n\n\n\n\n\n");
-  // await db.end();
 }
 
 async function getEmpArr() {
