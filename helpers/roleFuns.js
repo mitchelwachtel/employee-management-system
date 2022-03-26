@@ -64,7 +64,6 @@ async function insertRole(response) {
       `INSERT INTO role(title, salary, department_id) VALUES('${response.name}', '${response.salary}', '${dId}')`
     );
   });
-  
   return response;
 }
 
